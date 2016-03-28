@@ -37,9 +37,9 @@ void rescale(int* l , int* u , int index_of_sym ,int Cum_count[])
 	printf("Cum_count[%d] = %d   ",index_of_sym -1, Cum_count[index_of_sym - 1]);
 	int ll = *(l);
 	int uu = *(u);
-    *(u) = ll + (uu - ll + 1) * (Cum_count[index_of_sym]) / Cum_count[symbol_num] - 1;
+        *(u) = ll + (uu - ll + 1) * (Cum_count[index_of_sym]) / Cum_count[symbol_num] - 1;
 	*(l) = ll + (uu - ll + 1) * (Cum_count[index_of_sym - 1]) / Cum_count[symbol_num];
-    printf("(%d , %d)--->>>(%d , %d)\n", ll , uu , *(l) , *(u));
+        printf("(%d , %d)--->>>(%d , %d)\n", ll , uu , *(l) , *(u));
 	//printf("U = %d -> U = %d\n", uu , *(u)); 
 }
 
@@ -61,7 +61,7 @@ void main(int argc ,char * args[])
   if((fp = fopen(args[1] , "r"))== NULL)    //open symbol file
   {
   	printf("%s\n",args[1]);
-    printf("open file error\n");
+        printf("open file error\n");
   	exit(0);
   }
   
@@ -136,7 +136,7 @@ printf("%d\n",bit.UMSB);
 if((fp = fopen(args[1] , "r"))== NULL)    //open symbol file
   {
   	printf("%s\n",args[1]);
-    printf("open file error\n");
+        printf("open file error\n");
   	exit(0);
   }
 
@@ -158,7 +158,7 @@ if((fp = fopen(args[1] , "r"))== NULL)    //open symbol file
                   }
                   else
                     printf("E1 mapping:--------------------------------------");  
-              printf("(%d , %d)--->>>",l,u);
+                    printf("(%d , %d)--->>>",l,u);
               /*---------------------
               if UMSB = LMSB = b
                 shift l to left 1 bit and shift 0 into LSB;
@@ -171,7 +171,7 @@ if((fp = fopen(args[1] , "r"))== NULL)    //open symbol file
               bit.sendbit = !bit.sendbit;   
                   while(Scale3 > 0)       
                   {  
-                  	printf("Scale3 = %d\n",Scale3);
+                    printf("Scale3 = %d\n",Scale3);
                     send(bit);
                     Scale3--; 
                     //printf("%d\n",bit.sendbit);
