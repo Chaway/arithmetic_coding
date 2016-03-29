@@ -5,6 +5,9 @@
 #define norMASK 0x80
 
 static int symbol_num; // variety  number of  symbols
+static char buffer;
+//static unsigned char  bits_in_buffer = 0;
+FILE * fp , *fpo;
 
 struct Bit
 {
@@ -13,19 +16,79 @@ struct Bit
   unsigned char LMSB:1;  //MSB of low boundary
   unsigned char LSMSB:1; //second MSB of low boundary
   unsigned char sendbit:1;
-  unsigned char empty:3;
-};
+  unsigned char bits_in_buffer:3;//number of bits in buffer to be write into output file 
+}bit; 
 
-
-void send(struct Bit bit)
+void final_send(int l,int Scale3)
 {
-  if(bit.sendbit)
+   printf("final send\n");
+   printf("bit.bits_in_buffer = %d , Buffer = %d , L = %d , Scale3 = %d\n",bit.bits_in_buffer,buffer,l,Scale3);
+   // buffer = buffer << (8 - bit.bits_in_buffer);
+   bit.LMSB = l >> (m - 1);
+   int total_bits = Scale3 + m;
+   int sent_bits = 0;
+   while(sent_bits != total_bits)
+   {
+       if(1 <= sent_bits && sent_bits <= Scale3)
+       {
+          bit.sendbit = ! bit.LMSB;             
+       }
+       else
+       {
+           if(sent_bits <1)
+           {
+            bit.sendbit = bit.LMSB;
+           }
+           else
+            bit.sendbit = (l >> (m - sent_bits + Scale3 - 1)) & 1;
+       }
+      
+       buffer = (buffer << 1) + bit.sendbit;
+       if(bit.bits_in_buffer == 7)
+       {
+        sent_bits ++;
+        printf("######write %d into outputfile \n",buffer);
+        fwrite(&buffer,1,1,fpo);
+        bit.bits_in_buffer = 0;
+       } 
+       else
+       {
+         sent_bits ++;
+         bit.bits_in_buffer ++;  
+       }
+   }
+   
+   buffer = buffer << (8 - bit.bits_in_buffer);
+   printf("######write %d into outputfile \n",buffer);
+   fwrite(&buffer,1,1,fpo);
+}
+
+
+void send()
+{
+  
+  if(bit.sendbit) 
   {
-  	printf("*****send 1\n");
+    printf("*****send 1\n");
   }
   else
+  {
   	printf("*****send 0\n");
+  }
 
+  printf("######bits_in_buffer = %d\n",bit.bits_in_buffer);
+  buffer = (buffer << 1) + bit.sendbit;
+
+  if(bit.bits_in_buffer == 7)
+  {
+    printf("######write %d into outputfile \n",buffer);
+    fwrite(&buffer,1,1,fpo);
+    bit.bits_in_buffer = 0;
+  }
+  else
+  {
+    bit.bits_in_buffer ++ ;
+  }
 }
 
 
@@ -34,12 +97,12 @@ void rescale(int* l , int* u , int index_of_sym ,int Cum_count[])
 {
 	printf("rescale: ");
 	printf("Cum_count[%d] = %d   ",index_of_sym, Cum_count[index_of_sym]);
-	printf("Cum_count[%d] = %d   ",index_of_sym -1, Cum_count[index_of_sym - 1]);
+	printf("Cum_count[%d] = %d   ",index_of_sym - 1, Cum_count[index_of_sym - 1]);
 	int ll = *(l);
 	int uu = *(u);
-        *(u) = ll + (uu - ll + 1) * (Cum_count[index_of_sym]) / Cum_count[symbol_num] - 1;
+  *(u) = ll + (uu - ll + 1) * (Cum_count[index_of_sym]) / Cum_count[symbol_num] - 1;
 	*(l) = ll + (uu - ll + 1) * (Cum_count[index_of_sym - 1]) / Cum_count[symbol_num];
-        printf("(%d , %d)--->>>(%d , %d)\n", ll , uu , *(l) , *(u));
+   printf("(%d , %d)--->>>(%d , %d)\n", ll , uu , *(l) , *(u));
 	//printf("U = %d -> U = %d\n", uu , *(u)); 
 }
 
@@ -51,27 +114,36 @@ void rescale(int* l , int* u , int index_of_sym ,int Cum_count[])
 
 void main(int argc ,char * args[])
 {
-   if(argc != 2)
+   if(argc != 3)
   {
   	printf("%d\n",argc);
-  	printf("Please input single file\n");
+  	printf("Please input  input-filename and output-filename\n");
   }
   
-  FILE * fp;
   if((fp = fopen(args[1] , "r"))== NULL)    //open symbol file
   {
   	printf("%s\n",args[1]);
-        printf("open file error\n");
+    printf("open input file error\n");
   	exit(0);
   }
   
+  if((fpo = fopen(args[2] , "wb"))== NULL)    //open symbol file
+  {
+    printf("%s\n",args[2]);
+    printf("open output file error\n");
+    exit(0);
+  }
+
   int source_length = 0;
- // int symbol_num = 0;  
   int symbols_statistic[2][255] = {0};
+
+  buffer = 0;
+  symbol_num = 0;
 
   char c ;
   while( (c = fgetc(fp)) != EOF && c != '\n')
     {
+         printf("current_symbol is %c \n",c);
         source_length ++ ;
         symbols_statistic[0][c] ++;
     }   //printf("%c",c);
@@ -79,12 +151,13 @@ void main(int argc ,char * args[])
  // int Count[];
 
   int Count[256] = {0}; //frequency of symbol
-
+  char Symbols[256]; 
   for(int i = 0 ;i < 255; ++i)
   {
   	if(symbols_statistic[0][i] != 0)
   	{
-  		Count[symbol_num]= symbols_statistic[0][i];
+  		Count[symbol_num] = symbols_statistic[0][i];
+      Symbols[symbol_num] = i;
   		symbol_num ++;
   		symbols_statistic[1][i] = symbol_num;
   		printf("the number %d  kind symbol %d , its total number is %d\n",symbol_num, i ,symbols_statistic[0][i]);
@@ -126,25 +199,26 @@ void main(int argc ,char * args[])
 
 
   
-struct Bit bit;
+//struct Bit bit;
 //test printf = 1;
-bit.UMSB = 5/4; 
-printf("%d\n",bit.UMSB);
+//bit.UMSB = 5/4; 
+//printf("%d\n",bit.UMSB); 
 
 //int wait_for_encode = source_length;  //number of symbols to encode
 
 if((fp = fopen(args[1] , "r"))== NULL)    //open symbol file
   {
   	printf("%s\n",args[1]);
-        printf("open file error\n");
+    printf("open file error\n");
   	exit(0);
   }
 
-   char symbol;
-   while( (symbol = fgetc(fp)) != EOF && symbol != '\n')
+ 
+char symbol;
+   while((symbol = fgetc(fp)) != EOF && symbol != '\n')
    {
       //encode have not finished
-   	  //printf("current_symbol is %c \n",symbol);
+   	 printf("current_symbol is %c \n",symbol);
    	 while(1)
    	 {
         bit.UMSB = (u >> (m - 1))%2;   
@@ -167,12 +241,12 @@ if((fp = fopen(args[1] , "r"))== NULL)    //open symbol file
               l = (l << 1) & mMASK;    //guarantee that l and u always use m bits
               u = ((u << 1) + 1) & mMASK; 
               printf("(%d , %d)\n",l,u);
-              send(bit);
+              send();
               bit.sendbit = !bit.sendbit;   
                   while(Scale3 > 0)       
                   {  
                     printf("Scale3 = %d\n",Scale3);
-                    send(bit);
+                    send();
                     Scale3--; 
                     //printf("%d\n",bit.sendbit);
                   }
@@ -206,7 +280,9 @@ if((fp = fopen(args[1] , "r"))== NULL)    //open symbol file
              }
         }
     }
-     //all symbols have been encoded
+  final_send(l,Scale3);
+  //all symbols have been encoded
   fclose(fp);
+  fclose(fpo);
   printf("encode finished\n");
 }
