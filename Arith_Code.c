@@ -1,11 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define m 28
-#define mMASK 0xFFFFFFF
-#define norMASK 0x8000000
+#include <math.h>
+//#define m 21
+
 
 static int symbol_num; // variety  number of  symbols
-static char buffer;
+static unsigned char buffer;
+static unsigned long int  mMASK;
+static unsigned long int  norMASK;
+static int m;
+
 //static unsigned char  bits_in_buffer = 0;
 FILE * fp , *fpo , *fs;
 
@@ -71,19 +75,19 @@ void send()
 
   if(bit.sendbit)
   {
-    printf("*****send 1\n");
+    ///printf("*****send 1\n");
   }
   else
   {
-  	printf("*****send 0\n");
+  	///printf("*****send 0\n");
   }
 
-  printf("######bits_in_buffer = %d\n",bit.bits_in_buffer);
+  ///printf("######bits_in_buffer = %d\n",bit.bits_in_buffer);
   buffer = (buffer << 1) + bit.sendbit;
 
   if(bit.bits_in_buffer == 7)
   {
-    printf("######write %d into outputfile \n",buffer);
+    printf("######write %x into outputfile \n",buffer);
     fwrite(&buffer,1,1,fpo);
     //buffer = 0;               //clear buffer
     bit.bits_in_buffer = 0;
@@ -103,9 +107,9 @@ void rescale(unsigned long int* l , unsigned long int* u , int index_of_sym ,int
 	printf("Cum_count[%d] = %d   ",index_of_sym - 1, Cum_count[index_of_sym - 1]);
 	unsigned long int ll = *(l);
 	unsigned long int uu = *(u);
-  *(u) = ll + ((uu - ll + 1) * (Cum_count[index_of_sym])) / Cum_count[symbol_num] - 1;
+        *(u) = ll + ((uu - ll + 1) * (Cum_count[index_of_sym])) / Cum_count[symbol_num] - 1;
 	*(l) = ll + ((uu - ll + 1) * (Cum_count[index_of_sym - 1])) / Cum_count[symbol_num];
-   printf("(%ld , %ld)--->>>(%ld , %ld)\n", ll , uu , *(l) , *(u));
+        printf("(%ld , %ld)--->>>(%ld , %ld)\n", ll , uu , *(l) , *(u));
 	//printf("U = %d -> U = %d\n", uu , *(u));
 }
 
@@ -166,7 +170,7 @@ void main(int argc ,char * args[])
      	c = temp;
         source_length ++;
         symbols_statistic[0][c] ++;
-        printf("current_symbol is %x , symbols_statistic[0][%u] = %d\n",c,c,symbols_statistic[0][c]);
+        ///printf("current_symbol is %x , symbols_statistic[0][%u] = %d\n",c,c,symbols_statistic[0][c]);
   
     }   //printf("%c",c);
  
@@ -183,7 +187,7 @@ void main(int argc ,char * args[])
      	Symbols[symbol_num] = i;
   		symbol_num ++;
   		symbols_statistic[1][i] = symbol_num;
-  		printf("number %d kind symbol is %8x , its total number is %d \n" , symbol_num , i , symbols_statistic[0][i]);
+  		///printf("number %d kind symbol is %8x , its total number is %d \n" , symbol_num , i , symbols_statistic[0][i]);
     }
   }
 
@@ -209,12 +213,16 @@ void main(int argc ,char * args[])
   for (int i = 0; i < symbol_num; ++i)
   {
      	Cum_count[i + 1] = Cum_count[i] + Count[i];
-     	printf("Cum_count[%d] = %d\n",i + 1,Cum_count[i+1]);
+     	///printf("Cum_count[%d] = %d\n",i + 1,Cum_count[i+1]);
   }
 
   fclose(fs);
 
 
+  m = (int)(log(Cum_count[symbol_num])/log(2)) + 1 + 2; 
+  mMASK =  (1 << m) - 1;
+  printf("m = %d\n",m);
+  norMASK=  1 << (m-1);
   int Scale3 = 0;
 
   //initialize  boundary
@@ -231,11 +239,13 @@ void main(int argc ,char * args[])
 rewind(fp);
 
 unsigned char symbol;
+int current_num = 0;
    while((temp = fgetc(fp)) != EOF)
    {
      symbol = temp;
+     current_num ++;
       //encode have not finished
-   	 //printf("current_symbol is %c \n",symbol);
+   	/// printf("current_symbol is %x \n",symbol);
    	 while(1)
    	 {
         bit.UMSB = (u >> (m - 1))%2;
@@ -243,13 +253,13 @@ unsigned char symbol;
             if(bit.UMSB == bit.LMSB)
             {
               bit.sendbit = bit.UMSB;
-                  if(bit.sendbit)
-                  {
-                    printf("E2 mapping:--------------------------------------");
-                  }
-                  else
-                    printf("E1 mapping:--------------------------------------");
-                    printf("(%ld , %ld)--->>>",l,u);
+                ///  if(bit.sendbit)
+                 /// {
+                  ///  printf("E2 mapping:--------------------------------------");
+                 /// }
+                 /// else
+                  ///  printf("E1 mapping:--------------------------------------");
+                  ///  printf("(%ld , %ld)--->>>",l,u);
               /*---------------------
               if UMSB = LMSB = b
                 shift l to left 1 bit and shift 0 into LSB;
@@ -257,15 +267,15 @@ unsigned char symbol;
               ----------------------*/
               l = (l << 1) & mMASK;    //guarantee that l and u always use m bits
               u = ((u << 1) + 1) & mMASK;
-              printf("(%ld , %ld)\n",l,u);
+             /// printf("(%ld , %ld)\n",l,u);
               send();
               bit.sendbit = !bit.sendbit;
                   while(Scale3 > 0)
                   {
-                    printf("Scale3 = %d\n",Scale3);
+                   /// printf("Scale3 = %d\n",Scale3);
                     send();
                     Scale3--;
-                    //printf("%d\n",bit.sendbit);
+                   /// printf("%d\n",bit.sendbit);
                   }
              }
              else
@@ -275,19 +285,19 @@ unsigned char symbol;
 
                 if(bit.USMSB == 0 && bit.LSMSB == 1)  //USMSB = 0 and LSMSB = 1  only if when u = 10... and l = 01...
                 {
-                  printf("E3 mapping:--------------------------------------");
-                  printf("(%ld , %ld)--->>>",l,u);
+                  ///printf("E3 mapping:--------------------------------------");
+                 /// printf("(%ld , %ld)--->>>",l,u);
                   l = ((l << 1) ^ norMASK) & mMASK;
                   u = (((u << 1) ^ norMASK) + 1) & mMASK;
-                  printf("(%ld , %ld)\n",l,u);
+                  ///printf("(%ld , %ld)\n",l,u);
                   Scale3 ++ ;
-                  printf("Scale3 = %d\n",Scale3);
+                  ///printf("Scale3 = %d\n",Scale3);
                 }
                 else
                 {
                 	//rescale l and u
                 	//int index_of_sym = get_current_symbol(wait_for_encode);
-                	printf("@@@@@@current_symbol is (ASCII = %x)\n",symbol);
+                	printf("@@@@@@the number %d is (ASCII = %x)\n",current_num,symbol);
                 	int index_of_sym = symbols_statistic[1][symbol];
                 	rescale(&l,&u,index_of_sym , Cum_count);
                 	break;

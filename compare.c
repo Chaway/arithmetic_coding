@@ -31,14 +31,15 @@ void main(int argc ,char * args[])
      temp2 = fgetc(fo);
      if(temp1 == EOF && temp2 == EOF)
      {
-     	printf("%d\n",i);
+     	printf("%s is same as  %s\n",args[1],args[2]);
      	break; 
      }
      else
      {
        if(temp1 != temp2)
        {
-       	//printf("the number %d btye not equal\n",i);
+       	printf("the number %d btye not equal\n",i);
+        break;
        }
      }
   }

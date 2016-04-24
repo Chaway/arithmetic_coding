@@ -1,16 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <math.h>
 //MACRO difination
-#define m 28
-#define mMASK 0xFFFFFFF
-#define norMASK 0x8000000
+//#define m 21
 
 FILE * fp , *fpo , *fs;
 static int  symbol_num; // variety  number of  symbols
 static char buffer;
 static unsigned long int  t;
 static unsigned char bits_in_buffer; //number of bits in buffer to be read into t;
+static unsigned long int  mMASK ;
+static unsigned long int  norMASK ;
+static int m;
 
 struct Bit
 {
@@ -47,6 +48,7 @@ void get_bit_from_buffer()
   buffer = buffer << 1;
   bits_in_buffer --;
   t = ((t << 1) + bit.sendbit) & mMASK;
+  //printf("t = %d\n",t);
 }
 
 
@@ -84,7 +86,7 @@ void main(int argc , char * args[])
   for(int i = 1 ;i <= symbol_num ; ++i)
   {
      fscanf(fs,"%d %d", &symbols[i] , &Count[i - 1]);
-     printf("number %d symbol is (ASCII value = %d) , Count[%d] = %d \n", i , symbols[i], i - 1 , Count[i - 1]);
+    /// printf("number %d symbol is (ASCII value = %d) , Count[%d] = %d \n", i , symbols[i], i - 1 , Count[i - 1]);
   }
 
   fclose(fs);
@@ -95,10 +97,16 @@ void main(int argc , char * args[])
   for (int i = 0; i < symbol_num; ++i)
   {
      Cum_count[i + 1] = Cum_count[i] + Count[i];
-     printf("Cum_count[%d] = %d\n",i + 1,Cum_count[i+1]);
+    /// printf("Cum_count[%d] = %d\n",i + 1,Cum_count[i+1]);
   }
 
   int num_wait_decode = Cum_count[symbol_num];
+
+
+  m = (int)(log(Cum_count[symbol_num])/log(2)) + 1 + 2; 
+  mMASK = (1 << m) - 1;
+  norMASK = 1 << (m-1);
+
 
   //initialize t,l,u
   for (int i = 0; i < m; i++)
@@ -107,6 +115,10 @@ void main(int argc , char * args[])
   }
 
   printf("t = %ld\n",t);
+
+
+
+ 
   unsigned long int l = 0;
   unsigned long int u = mMASK;
   while(num_wait_decode)
@@ -117,8 +129,8 @@ void main(int argc , char * args[])
        bit.LMSB = (l >> (m - 1))%2;
            if(bit.UMSB == bit.LMSB)
            {
-             printf("UMSB = LMSB --------------------------------------");
-             printf("(%ld , %ld , %ld)--->>>",l,u,t);
+            /// printf("UMSB = LMSB --------------------------------------");
+            /// printf("(%ld , %ld , %ld)--->>>",l,u,t);
              /*---------------------
                shift l to left 1 bit and shift 0 into LSB;
                shift u to left 1 bit and shift 1 into LSB;
@@ -127,7 +139,7 @@ void main(int argc , char * args[])
              l = (l << 1) & mMASK;    //guarantee that l and u always use m bits
              u = ((u << 1) + 1) & mMASK;
              get_bit_from_buffer();
-             printf("(%ld , %ld , %ld)\n",l,u,t);
+           ///  printf("(%ld , %ld , %ld)\n",l,u,t);
             }
             else
             {
@@ -136,20 +148,20 @@ void main(int argc , char * args[])
 
                if(bit.USMSB == 0 && bit.LSMSB == 1)  //USMSB = 0 and LSMSB = 1  only if when u = 10... and l = 01...
                {
-                 printf("E3 mapping:--------------------------------------");
-                 printf("(%ld , %ld , %ld)--->>>",l,u,t);
+                 ///printf("E3 mapping:--------------------------------------");
+                 /// printf("(%ld , %ld , %ld)--->>>",l,u,t);
                  l = ((l << 1) ^ norMASK) & mMASK;
                  u = (((u << 1) ^ norMASK) + 1) & mMASK;
                  get_bit_from_buffer();
                  t = t ^ norMASK;
-                 printf("(%ld , %ld , %ld)\n",l,u,t);
+                 ///printf("(%ld , %ld , %ld)\n",l,u,t);
                }
                else
                {
                  //rescale l and u
                  //int index_of_sym = get_current_symbol(wait_for_encode);
-                 int k = 0;
-                 while((((t - l + 1)*Cum_count[symbol_num]))/(u - l + 1) >= Cum_count[k])
+                 int k = 1;
+                 while((((t - l + 1)*Cum_count[symbol_num]))/(u - l + 1.0) > Cum_count[k])
                  {
                    k ++;
                  }
@@ -157,7 +169,8 @@ void main(int argc , char * args[])
                  unsigned char symbol = symbols[k];
                  num_wait_decode -- ;
                  printf(" num_wait_decode = %d\n",num_wait_decode);
-                 printf("@@@@@@current_symbol is (ASCII = %x)\n",symbol);
+                 printf("@@@@@@the number %d is (ASCII = %x)\n",Cum_count[symbol_num] - num_wait_decode, symbol);
+                
                  fputc(symbol , fpo);
                  rescale(&l,&u, k , Cum_count);
                  break;
