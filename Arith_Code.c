@@ -4,14 +4,15 @@
 //#define m 21
 
 
-static int symbol_num; // variety  number of  symbols
+static unsigned short symbol_num; // variety  number of  symbols
 static unsigned char buffer;
 static unsigned long int  mMASK;
 static unsigned long int  norMASK;
 static int m;
+int code_length = 0;
 
 //static unsigned char  bits_in_buffer = 0;
-FILE * fp , *fpo , *fs;
+FILE * fp , *fpo;
 
 struct Bit
 {
@@ -25,8 +26,8 @@ struct Bit
 
 void final_send(int l,int Scale3)
 {
-   printf("final send\n");
-   printf("bit.bits_in_buffer = %d , Buffer = %d , L = %d , Scale3 = %d\n",bit.bits_in_buffer,buffer,l,Scale3);
+   ///printf("final send\n");
+   ///printf("bit.bits_in_buffer = %d , Buffer = %d , L = %d , Scale3 = %d\n",bit.bits_in_buffer,buffer,l,Scale3);
    // buffer = buffer << (8 - bit.bits_in_buffer);
    bit.LMSB = l >> (m - 1);
    int total_bits = Scale3 + m;
@@ -51,9 +52,10 @@ void final_send(int l,int Scale3)
        if(bit.bits_in_buffer == 7)
        {
         sent_bits ++;
-        printf("######write %d into outputfile \n",buffer);
+        // printf("######write %d into outputfile \n",buffer);
         fwrite(&buffer,1,1,fpo);
         //clear buffer
+	code_length ++;
         //buffer = 0;
         bit.bits_in_buffer = 0;
        }
@@ -65,8 +67,9 @@ void final_send(int l,int Scale3)
    }
 
    buffer = buffer << (8 - bit.bits_in_buffer);
-   printf("######write %d into outputfile \n",buffer);
+   ///printf("######write %d into outputfile \n",buffer);
    fwrite(&buffer,1,1,fpo);
+   code_length ++;
 }
 
 
@@ -87,8 +90,9 @@ void send()
 
   if(bit.bits_in_buffer == 7)
   {
-    printf("######write %x into outputfile \n",buffer);
+    ///printf("######write %x into outputfile \n",buffer);
     fwrite(&buffer,1,1,fpo);
+    code_length ++;
     //buffer = 0;               //clear buffer
     bit.bits_in_buffer = 0;
   }
@@ -102,14 +106,14 @@ void send()
 
 void rescale(unsigned long int* l , unsigned long int* u , int index_of_sym ,int Cum_count[])
 {
-	printf("rescale: ");
-	printf("Cum_count[%d] = %d   ",index_of_sym, Cum_count[index_of_sym]);
-	printf("Cum_count[%d] = %d   ",index_of_sym - 1, Cum_count[index_of_sym - 1]);
+	///printf("rescale: ");
+	///printf("Cum_count[%d] = %d   ",index_of_sym, Cum_count[index_of_sym]);
+	///printf("Cum_count[%d] = %d   ",index_of_sym - 1, Cum_count[index_of_sym - 1]);
 	unsigned long int ll = *(l);
 	unsigned long int uu = *(u);
         *(u) = ll + ((uu - ll + 1) * (Cum_count[index_of_sym])) / Cum_count[symbol_num] - 1;
 	*(l) = ll + ((uu - ll + 1) * (Cum_count[index_of_sym - 1])) / Cum_count[symbol_num];
-        printf("(%ld , %ld)--->>>(%ld , %ld)\n", ll , uu , *(l) , *(u));
+        ///printf("(%ld , %ld)--->>>(%ld , %ld)\n", ll , uu , *(l) , *(u));
 	//printf("U = %d -> U = %d\n", uu , *(u));
 }
 
@@ -141,13 +145,13 @@ void main(int argc ,char * args[])
     exit(0);
   }
 
-
-  if((fs = fopen("statistic.txt" , "w"))== NULL)    //open statistic file
-  {
-    //printf("%s\n",args[2]);
-    printf("create statistic-file error\n");
-    exit(0);
-  }
+ printf("Arithmetic Coding start ...\n");
+  // if((fs = fopen("statistic.txt" , "w"))== NULL)    //open statistic file
+  // {
+  //   //printf("%s\n",args[2]);
+  //   printf("create statistic-file error\n");
+  //   exit(0);
+  // }
   //-------------------------------------------------------
   //initialize
   //-------------------------------------------------------
@@ -186,15 +190,22 @@ void main(int argc ,char * args[])
   		Count[symbol_num] = symbols_statistic[0][i];
      	Symbols[symbol_num] = i;
   		symbol_num ++;
+  		//printf("%d\n",symbol_num);
   		symbols_statistic[1][i] = symbol_num;
   		///printf("number %d kind symbol is %8x , its total number is %d \n" , symbol_num , i , symbols_statistic[0][i]);
     }
   }
 
-  fprintf(fs, "%d\n",symbol_num);
+  fwrite(&symbol_num,sizeof(symbol_num),1,fpo);
+
+  code_length = code_length + sizeof(symbol_num);
+
   for (int i = 0; i < symbol_num; i++)
   {
-    fprintf(fs, "%d %d\n", Symbols[i] , Count[i]);
+    ///fprintf(fs, "%d %d\n", Symbols[i] , Count[i]);
+    fwrite(&Symbols[i],sizeof(Symbols[i]),1,fpo);
+    fwrite(&Count[i],sizeof(Count[i]),1,fpo);
+    code_length = code_length + sizeof(Symbols[i]) + sizeof(Count[i]);
   }
 
   // write statistic information to statistic.txt
@@ -216,7 +227,7 @@ void main(int argc ,char * args[])
      	///printf("Cum_count[%d] = %d\n",i + 1,Cum_count[i+1]);
   }
 
-  fclose(fs);
+  //fclose(fs);
 
 
   m = (int)(log(Cum_count[symbol_num])/log(2)) + 1 + 2; 
@@ -233,7 +244,7 @@ void main(int argc ,char * args[])
   unsigned long int l = 0;
   //unsigned int u = 0x7FFFFFFF;
   unsigned long int u = mMASK;
-  printf("L = %ld , U = %ld\n",l,u);
+  ///printf("L = %ld , U = %ld\n",l,u);
 
 //set fp back to the head of symbol file
 rewind(fp);
@@ -297,9 +308,9 @@ int current_num = 0;
                 {
                 	//rescale l and u
                 	//int index_of_sym = get_current_symbol(wait_for_encode);
-                	printf("@@@@@@the number %d is (ASCII = %x)\n",current_num,symbol);
+                	///printf("@@@@@@the number %d is (ASCII = %x)\n",current_num,symbol);
                 	int index_of_sym = symbols_statistic[1][symbol];
-                	rescale(&l,&u,index_of_sym , Cum_count);
+                	rescale(&l,&u,index_of_sym,Cum_count);
                 	break;
                 	//wait_for_encode -- ;
                 }
@@ -312,4 +323,5 @@ int current_num = 0;
   fclose(fp);
   fclose(fpo);
   printf("encode finished\n");
+  printf("Arithmetic code stream length is %d bytes\n",code_length);
 }

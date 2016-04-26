@@ -4,8 +4,8 @@
 //MACRO difination
 //#define m 21
 
-FILE * fp , *fpo , *fs;
-static int  symbol_num; // variety  number of  symbols
+FILE * fp , *fpo;
+static unsigned short symbol_num; // variety  number of  symbols
 static char buffer;
 static unsigned long int  t;
 static unsigned char bits_in_buffer; //number of bits in buffer to be read into t;
@@ -25,14 +25,14 @@ struct Bit
 
 void rescale(unsigned long int* l ,unsigned long int* u , int index_of_sym ,int Cum_count[])
 {
-	printf("rescale: ");
-	printf("Cum_count[%d] = %d   ",index_of_sym, Cum_count[index_of_sym]);
-	printf("Cum_count[%d] = %d   ",index_of_sym - 1, Cum_count[index_of_sym - 1]);
+	///printf("rescale: ");
+	///printf("Cum_count[%d] = %d   ",index_of_sym, Cum_count[index_of_sym]);
+	///printf("Cum_count[%d] = %d   ",index_of_sym - 1, Cum_count[index_of_sym - 1]);
 	unsigned long int ll = *(l);
 	unsigned long int uu = *(u);
         *(u) = ll + ((uu - ll + 1) * (Cum_count[index_of_sym])) / Cum_count[symbol_num] - 1;
 	*(l) = ll + ((uu - ll + 1) * (Cum_count[index_of_sym - 1])) / Cum_count[symbol_num];
-        printf("(%ld , %ld)--->>>(%ld , %ld)\n", ll , uu , *(l) , *(u));
+        ///printf("(%ld , %ld)--->>>(%ld , %ld)\n", ll , uu , *(l) , *(u));
 	//printf("U = %d -> U = %d\n", uu , *(u));
 }
 
@@ -70,26 +70,28 @@ void main(int argc , char * args[])
      exit(0);
   }
 
+   printf("Arithmetic decode start\n");
+  // if((fs = fopen("statistic.txt" , "r"))== NULL)    //open statistic file
+  // {
+  //    printf("open statistic-file error\n");
+  //    exit(0);
+  // }
 
-  if((fs = fopen("statistic.txt" , "r"))== NULL)    //open statistic file
-  {
-     printf("open statistic-file error\n");
-     exit(0);
-  }
-
-  fscanf(fs,"%d",&symbol_num); //get the namber of varity od symbols
-  printf("symbol_num = %d\n" , symbol_num);
+  fread(&symbol_num,sizeof(symbol_num),1,fp); //get the namber of varity od symbols
+   //printf("symbol_num = %d\n" , symbol_num);
 
   //initialize
   unsigned char symbols[symbol_num + 1];
   int Count[symbol_num];
   for(int i = 1 ;i <= symbol_num ; ++i)
   {
-     fscanf(fs,"%d %d", &symbols[i] , &Count[i - 1]);
+     ///fscanf(fs,"%d %d", &symbols[i] , &Count[i - 1]);
+     fread(&symbols[i],sizeof(symbols[i]),1,fp); 
+     fread(&Count[i - 1],sizeof(Count[i - 1]),1,fp); 
     /// printf("number %d symbol is (ASCII value = %d) , Count[%d] = %d \n", i , symbols[i], i - 1 , Count[i - 1]);
   }
 
-  fclose(fs);
+ //fclose(fs);
 
   int Cum_count[symbol_num + 1];
   //calculate Cum_count
@@ -114,7 +116,7 @@ void main(int argc , char * args[])
       get_bit_from_buffer();
   }
 
-  printf("t = %ld\n",t);
+ /// printf("t = %ld\n",t);
 
 
 
@@ -165,11 +167,11 @@ void main(int argc , char * args[])
                  {
                    k ++;
                  }
-                 printf("k = %d \n" , k);
+                 ///printf("k = %d \n" , k);
                  unsigned char symbol = symbols[k];
                  num_wait_decode -- ;
-                 printf(" num_wait_decode = %d\n",num_wait_decode);
-                 printf("@@@@@@the number %d is (ASCII = %x)\n",Cum_count[symbol_num] - num_wait_decode, symbol);
+                 ///printf(" num_wait_decode = %d\n",num_wait_decode);
+                 ///printf("@@@@@@the number %d is (ASCII = %x)\n",Cum_count[symbol_num] - num_wait_decode, symbol);
                 
                  fputc(symbol , fpo);
                  rescale(&l,&u, k , Cum_count);
