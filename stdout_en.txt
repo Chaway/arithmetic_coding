@@ -1,0 +1,485 @@
+Arithmetic Coding start ...
+current_symbol is 69 , symbols_statistic[0][105] = 1
+current_symbol is 74 , symbols_statistic[0][116] = 1
+current_symbol is 68 , symbols_statistic[0][104] = 1
+current_symbol is 6d , symbols_statistic[0][109] = 1
+current_symbol is 65 , symbols_statistic[0][101] = 1
+current_symbol is 74 , symbols_statistic[0][116] = 2
+current_symbol is 69 , symbols_statistic[0][105] = 2
+current_symbol is 63 , symbols_statistic[0][99] = 1
+current_symbol is 20 , symbols_statistic[0][32] = 1
+current_symbol is 63 , symbols_statistic[0][99] = 2
+current_symbol is 6f , symbols_statistic[0][111] = 1
+current_symbol is 64 , symbols_statistic[0][100] = 1
+current_symbol is 69 , symbols_statistic[0][105] = 3
+current_symbol is 6e , symbols_statistic[0][110] = 1
+current_symbol is 67 , symbols_statistic[0][103] = 1
+current_symbol is 21 , symbols_statistic[0][33] = 1
+current_symbol is 61 , symbols_statistic[0][97] = 1
+current_symbol is 62 , symbols_statistic[0][98] = 1
+current_symbol is 63 , symbols_statistic[0][99] = 3
+current_symbol is 64 , symbols_statistic[0][100] = 2
+current_symbol is 65 , symbols_statistic[0][101] = 2
+current_symbol is 66 , symbols_statistic[0][102] = 1
+current_symbol is 67 , symbols_statistic[0][103] = 2
+current_symbol is 68 , symbols_statistic[0][104] = 2
+current_symbol is 65 , symbols_statistic[0][101] = 3
+current_symbol is 6c , symbols_statistic[0][108] = 1
+current_symbol is 6c , symbols_statistic[0][108] = 2
+current_symbol is 6f , symbols_statistic[0][111] = 2
+current_symbol is 2c , symbols_statistic[0][44] = 1
+current_symbol is 61 , symbols_statistic[0][97] = 2
+current_symbol is 72 , symbols_statistic[0][114] = 1
+current_symbol is a , symbols_statistic[0][10] = 1
+number 1 kind symbol is        a , its total number is 1 
+number 2 kind symbol is       20 , its total number is 1 
+number 3 kind symbol is       21 , its total number is 1 
+number 4 kind symbol is       2c , its total number is 1 
+number 5 kind symbol is       61 , its total number is 2 
+number 6 kind symbol is       62 , its total number is 1 
+number 7 kind symbol is       63 , its total number is 3 
+number 8 kind symbol is       64 , its total number is 2 
+number 9 kind symbol is       65 , its total number is 3 
+number 10 kind symbol is       66 , its total number is 1 
+number 11 kind symbol is       67 , its total number is 2 
+number 12 kind symbol is       68 , its total number is 2 
+number 13 kind symbol is       69 , its total number is 3 
+number 14 kind symbol is       6c , its total number is 2 
+number 15 kind symbol is       6d , its total number is 1 
+number 16 kind symbol is       6e , its total number is 1 
+number 17 kind symbol is       6f , its total number is 2 
+number 18 kind symbol is       72 , its total number is 1 
+number 19 kind symbol is       74 , its total number is 2 
+10 1
+32 1
+33 1
+44 1
+97 2
+98 1
+99 3
+100 2
+101 3
+102 1
+103 2
+104 2
+105 3
+108 2
+109 1
+110 1
+111 2
+114 1
+116 2
+Cum_count[1] = 1
+Cum_count[2] = 2
+Cum_count[3] = 3
+Cum_count[4] = 4
+Cum_count[5] = 6
+Cum_count[6] = 7
+Cum_count[7] = 10
+Cum_count[8] = 12
+Cum_count[9] = 15
+Cum_count[10] = 16
+Cum_count[11] = 18
+Cum_count[12] = 20
+Cum_count[13] = 23
+Cum_count[14] = 25
+Cum_count[15] = 26
+Cum_count[16] = 27
+Cum_count[17] = 29
+Cum_count[18] = 30
+Cum_count[19] = 32
+Szie of origin file is 32
+m = 8
+L = 0 , U = 255
+@@@@@@the number 1 symbol is (ASCII = 105)
+rescale: Cum_count[13] = 23   Cum_count[12] = 20   (0 , 255)--->>>(160 , 183)
+E2 mapping:--------------------------------------(160 , 183)--->>>(64 , 111)
+*****send 1
+E1 mapping:--------------------------------------(64 , 111)--->>>(128 , 223)
+*****send 0
+E2 mapping:--------------------------------------(128 , 223)--->>>(0 , 191)
+*****send 1
+@@@@@@the number 2 symbol is (ASCII = 116)
+rescale: Cum_count[19] = 32   Cum_count[18] = 30   (0 , 191)--->>>(180 , 191)
+E2 mapping:--------------------------------------(180 , 191)--->>>(104 , 127)
+*****send 1
+E1 mapping:--------------------------------------(104 , 127)--->>>(208 , 255)
+*****send 0
+E2 mapping:--------------------------------------(208 , 255)--->>>(160 , 255)
+*****send 1
+E2 mapping:--------------------------------------(160 , 255)--->>>(64 , 255)
+*****send 1
+@@@@@@the number 3 symbol is (ASCII = 104)
+rescale: Cum_count[12] = 20   Cum_count[11] = 18   (64 , 255)--->>>(172 , 183)
+E2 mapping:--------------------------------------(172 , 183)--->>>(88 , 111)
+*****send 1
+E1 mapping:--------------------------------------(88 , 111)--->>>(176 , 223)
+*****send 0
+E2 mapping:--------------------------------------(176 , 223)--->>>(96 , 191)
+*****send 1
+E3 mapping:--------------------------------------(96 , 191)--->>>(64 , 255)
+Scale3 = 1
+@@@@@@the number 4 symbol is (ASCII = 109)
+rescale: Cum_count[15] = 26   Cum_count[14] = 25   (64 , 255)--->>>(214 , 219)
+E2 mapping:--------------------------------------(214 , 219)--->>>(172 , 183)
+*****send 1
+Scale3 = 1
+*****send 0
+0
+E2 mapping:--------------------------------------(172 , 183)--->>>(88 , 111)
+*****send 1
+E1 mapping:--------------------------------------(88 , 111)--->>>(176 , 223)
+*****send 0
+E2 mapping:--------------------------------------(176 , 223)--->>>(96 , 191)
+*****send 1
+E3 mapping:--------------------------------------(96 , 191)--->>>(64 , 255)
+Scale3 = 1
+@@@@@@the number 5 symbol is (ASCII = 101)
+rescale: Cum_count[9] = 15   Cum_count[8] = 12   (64 , 255)--->>>(136 , 153)
+E2 mapping:--------------------------------------(136 , 153)--->>>(16 , 51)
+*****send 1
+Scale3 = 1
+*****send 0
+0
+E1 mapping:--------------------------------------(16 , 51)--->>>(32 , 103)
+*****send 0
+E1 mapping:--------------------------------------(32 , 103)--->>>(64 , 207)
+*****send 0
+@@@@@@the number 6 symbol is (ASCII = 116)
+rescale: Cum_count[19] = 32   Cum_count[18] = 30   (64 , 207)--->>>(199 , 207)
+E2 mapping:--------------------------------------(199 , 207)--->>>(142 , 159)
+*****send 1
+E2 mapping:--------------------------------------(142 , 159)--->>>(28 , 63)
+*****send 1
+E1 mapping:--------------------------------------(28 , 63)--->>>(56 , 127)
+*****send 0
+E1 mapping:--------------------------------------(56 , 127)--->>>(112 , 255)
+*****send 0
+@@@@@@the number 7 symbol is (ASCII = 105)
+rescale: Cum_count[13] = 23   Cum_count[12] = 20   (112 , 255)--->>>(202 , 214)
+E2 mapping:--------------------------------------(202 , 214)--->>>(148 , 173)
+*****send 1
+E2 mapping:--------------------------------------(148 , 173)--->>>(40 , 91)
+*****send 1
+E1 mapping:--------------------------------------(40 , 91)--->>>(80 , 183)
+*****send 0
+E3 mapping:--------------------------------------(80 , 183)--->>>(32 , 239)
+Scale3 = 1
+@@@@@@the number 8 symbol is (ASCII = 99)
+rescale: Cum_count[7] = 10   Cum_count[6] = 7   (32 , 239)--->>>(77 , 96)
+E1 mapping:--------------------------------------(77 , 96)--->>>(154 , 193)
+*****send 0
+Scale3 = 1
+*****send 1
+1
+E2 mapping:--------------------------------------(154 , 193)--->>>(52 , 131)
+*****send 1
+@@@@@@the number 9 symbol is (ASCII = 32)
+rescale: Cum_count[2] = 2   Cum_count[1] = 1   (52 , 131)--->>>(54 , 56)
+E1 mapping:--------------------------------------(54 , 56)--->>>(108 , 113)
+*****send 0
+E1 mapping:--------------------------------------(108 , 113)--->>>(216 , 227)
+*****send 0
+E2 mapping:--------------------------------------(216 , 227)--->>>(176 , 199)
+*****send 1
+E2 mapping:--------------------------------------(176 , 199)--->>>(96 , 143)
+*****send 1
+E3 mapping:--------------------------------------(96 , 143)--->>>(64 , 159)
+Scale3 = 1
+E3 mapping:--------------------------------------(64 , 159)--->>>(0 , 191)
+Scale3 = 2
+@@@@@@the number 10 symbol is (ASCII = 99)
+rescale: Cum_count[7] = 10   Cum_count[6] = 7   (0 , 191)--->>>(42 , 59)
+E1 mapping:--------------------------------------(42 , 59)--->>>(84 , 119)
+*****send 0
+Scale3 = 2
+*****send 1
+1
+Scale3 = 1
+*****send 1
+1
+E1 mapping:--------------------------------------(84 , 119)--->>>(168 , 239)
+*****send 0
+E2 mapping:--------------------------------------(168 , 239)--->>>(80 , 223)
+*****send 1
+@@@@@@the number 11 symbol is (ASCII = 111)
+rescale: Cum_count[17] = 29   Cum_count[16] = 27   (80 , 223)--->>>(201 , 209)
+E2 mapping:--------------------------------------(201 , 209)--->>>(146 , 163)
+*****send 1
+E2 mapping:--------------------------------------(146 , 163)--->>>(36 , 71)
+*****send 1
+E1 mapping:--------------------------------------(36 , 71)--->>>(72 , 143)
+*****send 0
+E3 mapping:--------------------------------------(72 , 143)--->>>(16 , 159)
+Scale3 = 1
+@@@@@@the number 12 symbol is (ASCII = 100)
+rescale: Cum_count[8] = 12   Cum_count[7] = 10   (16 , 159)--->>>(61 , 69)
+E1 mapping:--------------------------------------(61 , 69)--->>>(122 , 139)
+*****send 0
+Scale3 = 1
+*****send 1
+1
+E3 mapping:--------------------------------------(122 , 139)--->>>(116 , 151)
+Scale3 = 1
+E3 mapping:--------------------------------------(116 , 151)--->>>(104 , 175)
+Scale3 = 2
+E3 mapping:--------------------------------------(104 , 175)--->>>(80 , 223)
+Scale3 = 3
+@@@@@@the number 13 symbol is (ASCII = 105)
+rescale: Cum_count[13] = 23   Cum_count[12] = 20   (80 , 223)--->>>(170 , 182)
+E2 mapping:--------------------------------------(170 , 182)--->>>(84 , 109)
+*****send 1
+Scale3 = 3
+*****send 0
+0
+Scale3 = 2
+*****send 0
+0
+Scale3 = 1
+*****send 0
+0
+E1 mapping:--------------------------------------(84 , 109)--->>>(168 , 219)
+*****send 0
+E2 mapping:--------------------------------------(168 , 219)--->>>(80 , 183)
+*****send 1
+E3 mapping:--------------------------------------(80 , 183)--->>>(32 , 239)
+Scale3 = 1
+@@@@@@the number 14 symbol is (ASCII = 110)
+rescale: Cum_count[16] = 27   Cum_count[15] = 26   (32 , 239)--->>>(201 , 206)
+E2 mapping:--------------------------------------(201 , 206)--->>>(146 , 157)
+*****send 1
+Scale3 = 1
+*****send 0
+0
+E2 mapping:--------------------------------------(146 , 157)--->>>(36 , 59)
+*****send 1
+E1 mapping:--------------------------------------(36 , 59)--->>>(72 , 119)
+*****send 0
+E1 mapping:--------------------------------------(72 , 119)--->>>(144 , 239)
+*****send 0
+E2 mapping:--------------------------------------(144 , 239)--->>>(32 , 223)
+*****send 1
+@@@@@@the number 15 symbol is (ASCII = 103)
+rescale: Cum_count[11] = 18   Cum_count[10] = 16   (32 , 223)--->>>(128 , 139)
+E2 mapping:--------------------------------------(128 , 139)--->>>(0 , 23)
+*****send 1
+E1 mapping:--------------------------------------(0 , 23)--->>>(0 , 47)
+*****send 0
+E1 mapping:--------------------------------------(0 , 47)--->>>(0 , 95)
+*****send 0
+E1 mapping:--------------------------------------(0 , 95)--->>>(0 , 191)
+*****send 0
+@@@@@@the number 16 symbol is (ASCII = 33)
+rescale: Cum_count[3] = 3   Cum_count[2] = 2   (0 , 191)--->>>(12 , 17)
+E1 mapping:--------------------------------------(12 , 17)--->>>(24 , 35)
+*****send 0
+E1 mapping:--------------------------------------(24 , 35)--->>>(48 , 71)
+*****send 0
+E1 mapping:--------------------------------------(48 , 71)--->>>(96 , 143)
+*****send 0
+E3 mapping:--------------------------------------(96 , 143)--->>>(64 , 159)
+Scale3 = 1
+E3 mapping:--------------------------------------(64 , 159)--->>>(0 , 191)
+Scale3 = 2
+@@@@@@the number 17 symbol is (ASCII = 97)
+rescale: Cum_count[5] = 6   Cum_count[4] = 4   (0 , 191)--->>>(24 , 35)
+E1 mapping:--------------------------------------(24 , 35)--->>>(48 , 71)
+*****send 0
+Scale3 = 2
+*****send 1
+1
+Scale3 = 1
+*****send 1
+1
+E1 mapping:--------------------------------------(48 , 71)--->>>(96 , 143)
+*****send 0
+E3 mapping:--------------------------------------(96 , 143)--->>>(64 , 159)
+Scale3 = 1
+E3 mapping:--------------------------------------(64 , 159)--->>>(0 , 191)
+Scale3 = 2
+@@@@@@the number 18 symbol is (ASCII = 98)
+rescale: Cum_count[6] = 7   Cum_count[5] = 6   (0 , 191)--->>>(36 , 41)
+E1 mapping:--------------------------------------(36 , 41)--->>>(72 , 83)
+*****send 0
+Scale3 = 2
+*****send 1
+1
+Scale3 = 1
+*****send 1
+1
+E1 mapping:--------------------------------------(72 , 83)--->>>(144 , 167)
+*****send 0
+E2 mapping:--------------------------------------(144 , 167)--->>>(32 , 79)
+*****send 1
+E1 mapping:--------------------------------------(32 , 79)--->>>(64 , 159)
+*****send 0
+E3 mapping:--------------------------------------(64 , 159)--->>>(0 , 191)
+Scale3 = 1
+@@@@@@the number 19 symbol is (ASCII = 99)
+rescale: Cum_count[7] = 10   Cum_count[6] = 7   (0 , 191)--->>>(42 , 59)
+E1 mapping:--------------------------------------(42 , 59)--->>>(84 , 119)
+*****send 0
+Scale3 = 1
+*****send 1
+1
+E1 mapping:--------------------------------------(84 , 119)--->>>(168 , 239)
+*****send 0
+E2 mapping:--------------------------------------(168 , 239)--->>>(80 , 223)
+*****send 1
+@@@@@@the number 20 symbol is (ASCII = 100)
+rescale: Cum_count[8] = 12   Cum_count[7] = 10   (80 , 223)--->>>(125 , 133)
+E3 mapping:--------------------------------------(125 , 133)--->>>(122 , 139)
+Scale3 = 1
+E3 mapping:--------------------------------------(122 , 139)--->>>(116 , 151)
+Scale3 = 2
+E3 mapping:--------------------------------------(116 , 151)--->>>(104 , 175)
+Scale3 = 3
+E3 mapping:--------------------------------------(104 , 175)--->>>(80 , 223)
+Scale3 = 4
+@@@@@@the number 21 symbol is (ASCII = 101)
+rescale: Cum_count[9] = 15   Cum_count[8] = 12   (80 , 223)--->>>(134 , 146)
+E2 mapping:--------------------------------------(134 , 146)--->>>(12 , 37)
+*****send 1
+Scale3 = 4
+*****send 0
+0
+Scale3 = 3
+*****send 0
+0
+Scale3 = 2
+*****send 0
+0
+Scale3 = 1
+*****send 0
+0
+E1 mapping:--------------------------------------(12 , 37)--->>>(24 , 75)
+*****send 0
+E1 mapping:--------------------------------------(24 , 75)--->>>(48 , 151)
+*****send 0
+@@@@@@the number 22 symbol is (ASCII = 102)
+rescale: Cum_count[10] = 16   Cum_count[9] = 15   (48 , 151)--->>>(96 , 99)
+E1 mapping:--------------------------------------(96 , 99)--->>>(192 , 199)
+*****send 0
+E2 mapping:--------------------------------------(192 , 199)--->>>(128 , 143)
+*****send 1
+E2 mapping:--------------------------------------(128 , 143)--->>>(0 , 31)
+*****send 1
+E1 mapping:--------------------------------------(0 , 31)--->>>(0 , 63)
+*****send 0
+E1 mapping:--------------------------------------(0 , 63)--->>>(0 , 127)
+*****send 0
+E1 mapping:--------------------------------------(0 , 127)--->>>(0 , 255)
+*****send 0
+@@@@@@the number 23 symbol is (ASCII = 103)
+rescale: Cum_count[11] = 18   Cum_count[10] = 16   (0 , 255)--->>>(128 , 143)
+E2 mapping:--------------------------------------(128 , 143)--->>>(0 , 31)
+*****send 1
+E1 mapping:--------------------------------------(0 , 31)--->>>(0 , 63)
+*****send 0
+E1 mapping:--------------------------------------(0 , 63)--->>>(0 , 127)
+*****send 0
+E1 mapping:--------------------------------------(0 , 127)--->>>(0 , 255)
+*****send 0
+@@@@@@the number 24 symbol is (ASCII = 104)
+rescale: Cum_count[12] = 20   Cum_count[11] = 18   (0 , 255)--->>>(144 , 159)
+E2 mapping:--------------------------------------(144 , 159)--->>>(32 , 63)
+*****send 1
+E1 mapping:--------------------------------------(32 , 63)--->>>(64 , 127)
+*****send 0
+E1 mapping:--------------------------------------(64 , 127)--->>>(128 , 255)
+*****send 0
+E2 mapping:--------------------------------------(128 , 255)--->>>(0 , 255)
+*****send 1
+@@@@@@the number 25 symbol is (ASCII = 101)
+rescale: Cum_count[9] = 15   Cum_count[8] = 12   (0 , 255)--->>>(96 , 119)
+E1 mapping:--------------------------------------(96 , 119)--->>>(192 , 239)
+*****send 0
+E2 mapping:--------------------------------------(192 , 239)--->>>(128 , 223)
+*****send 1
+E2 mapping:--------------------------------------(128 , 223)--->>>(0 , 191)
+*****send 1
+@@@@@@the number 26 symbol is (ASCII = 108)
+rescale: Cum_count[14] = 25   Cum_count[13] = 23   (0 , 191)--->>>(138 , 149)
+E2 mapping:--------------------------------------(138 , 149)--->>>(20 , 43)
+*****send 1
+E1 mapping:--------------------------------------(20 , 43)--->>>(40 , 87)
+*****send 0
+E1 mapping:--------------------------------------(40 , 87)--->>>(80 , 175)
+*****send 0
+E3 mapping:--------------------------------------(80 , 175)--->>>(32 , 223)
+Scale3 = 1
+@@@@@@the number 27 symbol is (ASCII = 108)
+rescale: Cum_count[14] = 25   Cum_count[13] = 23   (32 , 223)--->>>(170 , 181)
+E2 mapping:--------------------------------------(170 , 181)--->>>(84 , 107)
+*****send 1
+Scale3 = 1
+*****send 0
+0
+E1 mapping:--------------------------------------(84 , 107)--->>>(168 , 215)
+*****send 0
+E2 mapping:--------------------------------------(168 , 215)--->>>(80 , 175)
+*****send 1
+E3 mapping:--------------------------------------(80 , 175)--->>>(32 , 223)
+Scale3 = 1
+@@@@@@the number 28 symbol is (ASCII = 111)
+rescale: Cum_count[17] = 29   Cum_count[16] = 27   (32 , 223)--->>>(194 , 205)
+E2 mapping:--------------------------------------(194 , 205)--->>>(132 , 155)
+*****send 1
+Scale3 = 1
+*****send 0
+0
+E2 mapping:--------------------------------------(132 , 155)--->>>(8 , 55)
+*****send 1
+E1 mapping:--------------------------------------(8 , 55)--->>>(16 , 111)
+*****send 0
+E1 mapping:--------------------------------------(16 , 111)--->>>(32 , 223)
+*****send 0
+@@@@@@the number 29 symbol is (ASCII = 44)
+rescale: Cum_count[4] = 4   Cum_count[3] = 3   (32 , 223)--->>>(50 , 55)
+E1 mapping:--------------------------------------(50 , 55)--->>>(100 , 111)
+*****send 0
+E1 mapping:--------------------------------------(100 , 111)--->>>(200 , 223)
+*****send 0
+E2 mapping:--------------------------------------(200 , 223)--->>>(144 , 191)
+*****send 1
+E2 mapping:--------------------------------------(144 , 191)--->>>(32 , 127)
+*****send 1
+E1 mapping:--------------------------------------(32 , 127)--->>>(64 , 255)
+*****send 0
+@@@@@@the number 30 symbol is (ASCII = 97)
+rescale: Cum_count[5] = 6   Cum_count[4] = 4   (64 , 255)--->>>(88 , 99)
+E1 mapping:--------------------------------------(88 , 99)--->>>(176 , 199)
+*****send 0
+E2 mapping:--------------------------------------(176 , 199)--->>>(96 , 143)
+*****send 1
+E3 mapping:--------------------------------------(96 , 143)--->>>(64 , 159)
+Scale3 = 1
+E3 mapping:--------------------------------------(64 , 159)--->>>(0 , 191)
+Scale3 = 2
+@@@@@@the number 31 symbol is (ASCII = 114)
+rescale: Cum_count[18] = 30   Cum_count[17] = 29   (0 , 191)--->>>(174 , 179)
+E2 mapping:--------------------------------------(174 , 179)--->>>(92 , 103)
+*****send 1
+Scale3 = 2
+*****send 0
+0
+Scale3 = 1
+*****send 0
+0
+E1 mapping:--------------------------------------(92 , 103)--->>>(184 , 207)
+*****send 0
+E2 mapping:--------------------------------------(184 , 207)--->>>(112 , 159)
+*****send 1
+E3 mapping:--------------------------------------(112 , 159)--->>>(96 , 191)
+Scale3 = 1
+E3 mapping:--------------------------------------(96 , 191)--->>>(64 , 255)
+Scale3 = 2
+@@@@@@the number 32 symbol is (ASCII = 10)
+rescale: Cum_count[1] = 1   Cum_count[0] = 0   (64 , 255)--->>>(64 , 69)
+final send
+bit.bits_in_buffer = 4 , Buffer = 49 , L = 64 , Scale3 = 2
+######write 23 into outputfile 
+######write 0 into outputfile 
+encode finished
+Arithmetic code stream length is 114 bytes
+Compression rate is 0.280702 

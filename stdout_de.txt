@@ -1,0 +1,130 @@
+Arithmetic decode start
+(0 , 255 , 183)
+k = 13 
+@@@@@@the number 1 is (ASCII = 105)
+Cum_count[13] = 23   Cum_count[12] = 20   (0 , 255)--->>>(160 , 183)
+(0 , 191 , 187)
+k = 19 
+@@@@@@the number 2 is (ASCII = 116)
+Cum_count[19] = 32   Cum_count[18] = 30   (0 , 191)--->>>(180 , 191)
+(64 , 255 , 181)
+k = 12 
+@@@@@@the number 3 is (ASCII = 104)
+Cum_count[12] = 20   Cum_count[11] = 18   (64 , 255)--->>>(172 , 183)
+(64 , 255 , 216)
+k = 15 
+@@@@@@the number 4 is (ASCII = 109)
+Cum_count[15] = 26   Cum_count[14] = 25   (64 , 255)--->>>(214 , 219)
+(64 , 255 , 153)
+k = 9 
+@@@@@@the number 5 is (ASCII = 101)
+Cum_count[9] = 15   Cum_count[8] = 12   (64 , 255)--->>>(136 , 153)
+(64 , 207 , 204)
+k = 19 
+@@@@@@the number 6 is (ASCII = 116)
+Cum_count[19] = 32   Cum_count[18] = 30   (64 , 207)--->>>(199 , 207)
+(112 , 255 , 204)
+k = 13 
+@@@@@@the number 7 is (ASCII = 105)
+Cum_count[13] = 23   Cum_count[12] = 20   (112 , 255)--->>>(202 , 214)
+(32 , 239 , 77)
+k = 7 
+@@@@@@the number 8 is (ASCII = 99)
+Cum_count[7] = 10   Cum_count[6] = 7   (32 , 239)--->>>(77 , 96)
+(52 , 131 , 54)
+k = 2 
+@@@@@@the number 9 is (ASCII = 32)
+Cum_count[2] = 2   Cum_count[1] = 1   (52 , 131)--->>>(54 , 56)
+(0 , 191 , 57)
+k = 7 
+@@@@@@the number 10 is (ASCII = 99)
+Cum_count[7] = 10   Cum_count[6] = 7   (0 , 191)--->>>(42 , 59)
+(80 , 223 , 204)
+k = 17 
+@@@@@@the number 11 is (ASCII = 111)
+Cum_count[17] = 29   Cum_count[16] = 27   (80 , 223)--->>>(201 , 209)
+(16 , 159 , 67)
+k = 8 
+@@@@@@the number 12 is (ASCII = 100)
+Cum_count[8] = 12   Cum_count[7] = 10   (16 , 159)--->>>(61 , 69)
+(80 , 223 , 180)
+k = 13 
+@@@@@@the number 13 is (ASCII = 105)
+Cum_count[13] = 23   Cum_count[12] = 20   (80 , 223)--->>>(170 , 182)
+(32 , 239 , 204)
+k = 16 
+@@@@@@the number 14 is (ASCII = 110)
+Cum_count[16] = 27   Cum_count[15] = 26   (32 , 239)--->>>(201 , 206)
+(32 , 223 , 128)
+k = 11 
+@@@@@@the number 15 is (ASCII = 103)
+Cum_count[11] = 18   Cum_count[10] = 16   (32 , 223)--->>>(128 , 139)
+(0 , 191 , 12)
+k = 3 
+@@@@@@the number 16 is (ASCII = 33)
+Cum_count[3] = 3   Cum_count[2] = 2   (0 , 191)--->>>(12 , 17)
+(0 , 191 , 26)
+k = 5 
+@@@@@@the number 17 is (ASCII = 97)
+Cum_count[5] = 6   Cum_count[4] = 4   (0 , 191)--->>>(24 , 35)
+(0 , 191 , 37)
+k = 6 
+@@@@@@the number 18 is (ASCII = 98)
+Cum_count[6] = 7   Cum_count[5] = 6   (0 , 191)--->>>(36 , 41)
+(0 , 191 , 48)
+k = 7 
+@@@@@@the number 19 is (ASCII = 99)
+Cum_count[7] = 10   Cum_count[6] = 7   (0 , 191)--->>>(42 , 59)
+(80 , 223 , 128)
+k = 8 
+@@@@@@the number 20 is (ASCII = 100)
+Cum_count[8] = 12   Cum_count[7] = 10   (80 , 223)--->>>(125 , 133)
+(80 , 223 , 140)
+k = 9 
+@@@@@@the number 21 is (ASCII = 101)
+Cum_count[9] = 15   Cum_count[8] = 12   (80 , 223)--->>>(134 , 146)
+(48 , 151 , 98)
+k = 10 
+@@@@@@the number 22 is (ASCII = 102)
+Cum_count[10] = 16   Cum_count[9] = 15   (48 , 151)--->>>(96 , 99)
+(0 , 255 , 137)
+k = 11 
+@@@@@@the number 23 is (ASCII = 103)
+Cum_count[11] = 18   Cum_count[10] = 16   (0 , 255)--->>>(128 , 143)
+(0 , 255 , 151)
+k = 12 
+@@@@@@the number 24 is (ASCII = 104)
+Cum_count[12] = 20   Cum_count[11] = 18   (0 , 255)--->>>(144 , 159)
+(0 , 255 , 114)
+k = 9 
+@@@@@@the number 25 is (ASCII = 101)
+Cum_count[9] = 15   Cum_count[8] = 12   (0 , 255)--->>>(96 , 119)
+(0 , 191 , 147)
+k = 14 
+@@@@@@the number 26 is (ASCII = 108)
+Cum_count[14] = 25   Cum_count[13] = 23   (0 , 191)--->>>(138 , 149)
+(32 , 223 , 180)
+k = 14 
+@@@@@@the number 27 is (ASCII = 108)
+Cum_count[14] = 25   Cum_count[13] = 23   (32 , 223)--->>>(170 , 181)
+(32 , 223 , 195)
+k = 17 
+@@@@@@the number 28 is (ASCII = 111)
+Cum_count[17] = 29   Cum_count[16] = 27   (32 , 223)--->>>(194 , 205)
+(32 , 223 , 51)
+k = 4 
+@@@@@@the number 29 is (ASCII = 44)
+Cum_count[4] = 4   Cum_count[3] = 3   (32 , 223)--->>>(50 , 55)
+(64 , 255 , 98)
+k = 5 
+@@@@@@the number 30 is (ASCII = 97)
+Cum_count[5] = 6   Cum_count[4] = 4   (64 , 255)--->>>(88 , 99)
+(0 , 191 , 174)
+k = 18 
+@@@@@@the number 31 is (ASCII = 114)
+Cum_count[18] = 30   Cum_count[17] = 29   (0 , 191)--->>>(174 , 179)
+(64 , 255 , 64)
+k = 1 
+@@@@@@the number 32 is (ASCII = 10)
+Cum_count[1] = 1   Cum_count[0] = 0   (64 , 255)--->>>(64 , 69)
+decode finished

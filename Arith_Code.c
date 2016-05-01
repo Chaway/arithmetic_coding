@@ -27,7 +27,7 @@ struct Bit
 void final_send(int l,int Scale3)
 {
    ///printf("final send\n");
-   ///printf("bit.bits_in_buffer = %d , Buffer = %d , L = %d , Scale3 = %d\n",bit.bits_in_buffer,buffer,l,Scale3);
+  /// printf("bit.bits_in_buffer = %d , Buffer = %d , L = %d , Scale3 = %d\n",bit.bits_in_buffer,buffer,l,Scale3);
    // buffer = buffer << (8 - bit.bits_in_buffer);
    bit.LMSB = l >> (m - 1);
    int total_bits = Scale3 + m;
@@ -52,7 +52,7 @@ void final_send(int l,int Scale3)
        if(bit.bits_in_buffer == 7)
        {
         sent_bits ++;
-        // printf("######write %d into outputfile \n",buffer);
+        ///printf("######write %d into outputfile \n",buffer);
         fwrite(&buffer,1,1,fpo);
         //clear buffer
 	code_length ++;
@@ -76,14 +76,14 @@ void final_send(int l,int Scale3)
 void send()
 {
 
-  if(bit.sendbit)
-  {
-    ///printf("*****send 1\n");
-  }
-  else
-  {
-  	///printf("*****send 0\n");
-  }
+  // if(bit.sendbit)
+  // {
+  //   ///printf("*****send 1\n");
+  // }
+  // else
+  // {
+  // 	///printf("*****send 0\n");
+  // }
 
   ///printf("######bits_in_buffer = %d\n",bit.bits_in_buffer);
   buffer = (buffer << 1) + bit.sendbit;
@@ -111,7 +111,7 @@ void rescale(unsigned long int* l , unsigned long int* u , int index_of_sym ,int
 	///printf("Cum_count[%d] = %d   ",index_of_sym - 1, Cum_count[index_of_sym - 1]);
 	unsigned long int ll = *(l);
 	unsigned long int uu = *(u);
-        *(u) = ll + ((uu - ll + 1) * (Cum_count[index_of_sym])) / Cum_count[symbol_num] - 1;
+  *(u) = ll + ((uu - ll + 1) * (Cum_count[index_of_sym])) / Cum_count[symbol_num] - 1;
 	*(l) = ll + ((uu - ll + 1) * (Cum_count[index_of_sym - 1])) / Cum_count[symbol_num];
         ///printf("(%ld , %ld)--->>>(%ld , %ld)\n", ll , uu , *(l) , *(u));
 	//printf("U = %d -> U = %d\n", uu , *(u));
@@ -202,7 +202,8 @@ void main(int argc ,char * args[])
 
   for (int i = 0; i < symbol_num; i++)
   {
-    ///fprintf(fs, "%d %d\n", Symbols[i] , Count[i]);
+    ////fprintf(fs, "%d %d\n", Symbols[i] , Count[i]);
+    ///printf("%d %d\r\n", Symbols[i] , Count[i]);
     fwrite(&Symbols[i],sizeof(Symbols[i]),1,fpo);
     fwrite(&Count[i],sizeof(Count[i]),1,fpo);
     code_length = code_length + sizeof(Symbols[i]) + sizeof(Count[i]);
@@ -224,11 +225,11 @@ void main(int argc ,char * args[])
   for (int i = 0; i < symbol_num; ++i)
   {
      	Cum_count[i + 1] = Cum_count[i] + Count[i];
-     	///printf("Cum_count[%d] = %d\n",i + 1,Cum_count[i+1]);
+       /// printf("Cum_count[%d] = %d\r\n",i + 1,Cum_count[i+1]);
   }
 
   //fclose(fs);
-
+ printf("Szie of origin file is %d bytes\n",Cum_count[symbol_num]);
 
   m = (int)(log(Cum_count[symbol_num])/log(2)) + 1 + 2; 
   mMASK =  (1 << m) - 1;
@@ -256,7 +257,7 @@ int current_num = 0;
      symbol = temp;
      current_num ++;
       //encode have not finished
-   	/// printf("current_symbol is %x \n",symbol);
+   	 ///printf("current_symbol is %x \n",symbol);
    	 while(1)
    	 {
         bit.UMSB = (u >> (m - 1))%2;
@@ -264,13 +265,13 @@ int current_num = 0;
             if(bit.UMSB == bit.LMSB)
             {
               bit.sendbit = bit.UMSB;
-                ///  if(bit.sendbit)
-                 /// {
-                  ///  printf("E2 mapping:--------------------------------------");
-                 /// }
-                 /// else
-                  ///  printf("E1 mapping:--------------------------------------");
-                  ///  printf("(%ld , %ld)--->>>",l,u);
+                  // if(bit.sendbit)
+                  // {
+                  //   printf("E2 mapping:--------------------------------------");
+                  // }
+                  // else
+                  //   printf("E1 mapping:--------------------------------------");
+                  //   printf("(%ld , %ld)--->>>",l,u);
               /*---------------------
               if UMSB = LMSB = b
                 shift l to left 1 bit and shift 0 into LSB;
@@ -283,7 +284,7 @@ int current_num = 0;
               bit.sendbit = !bit.sendbit;
                   while(Scale3 > 0)
                   {
-                   /// printf("Scale3 = %d\n",Scale3);
+                   ///printf("Scale3 = %d\n",Scale3);
                     send();
                     Scale3--;
                    /// printf("%d\n",bit.sendbit);
@@ -297,7 +298,7 @@ int current_num = 0;
                 if(bit.USMSB == 0 && bit.LSMSB == 1)  //USMSB = 0 and LSMSB = 1  only if when u = 10... and l = 01...
                 {
                   ///printf("E3 mapping:--------------------------------------");
-                 /// printf("(%ld , %ld)--->>>",l,u);
+                  ///printf("(%ld , %ld)--->>>",l,u);
                   l = ((l << 1) ^ norMASK) & mMASK;
                   u = (((u << 1) ^ norMASK) + 1) & mMASK;
                   ///printf("(%ld , %ld)\n",l,u);
@@ -308,7 +309,7 @@ int current_num = 0;
                 {
                 	//rescale l and u
                 	//int index_of_sym = get_current_symbol(wait_for_encode);
-                	///printf("@@@@@@the number %d is (ASCII = %x)\n",current_num,symbol);
+                	///printf("@@@@@@the number %d symbol is (ASCII = %d)\n",current_num,symbol);
                 	int index_of_sym = symbols_statistic[1][symbol];
                 	rescale(&l,&u,index_of_sym,Cum_count);
                 	break;
@@ -324,4 +325,5 @@ int current_num = 0;
   fclose(fpo);
   printf("encode finished\n");
   printf("Arithmetic code stream length is %d bytes\n",code_length);
+  printf("Compression rate is %f \n",Cum_count[symbol_num]/(code_length + 0.0));
 }

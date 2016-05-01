@@ -30,7 +30,7 @@ void rescale(unsigned long int* l ,unsigned long int* u , int index_of_sym ,int 
 	///printf("Cum_count[%d] = %d   ",index_of_sym - 1, Cum_count[index_of_sym - 1]);
 	unsigned long int ll = *(l);
 	unsigned long int uu = *(u);
-        *(u) = ll + ((uu - ll + 1) * (Cum_count[index_of_sym])) / Cum_count[symbol_num] - 1;
+  *(u) = ll + ((uu - ll + 1) * (Cum_count[index_of_sym])) / Cum_count[symbol_num] - 1;
 	*(l) = ll + ((uu - ll + 1) * (Cum_count[index_of_sym - 1])) / Cum_count[symbol_num];
         ///printf("(%ld , %ld)--->>>(%ld , %ld)\n", ll , uu , *(l) , *(u));
 	//printf("U = %d -> U = %d\n", uu , *(u));
@@ -162,8 +162,10 @@ void main(int argc , char * args[])
                {
                  //rescale l and u
                  //int index_of_sym = get_current_symbol(wait_for_encode);
-                 int k = 1;
-                 while((((t - l + 1)*Cum_count[symbol_num]))/(u - l + 1.0) > Cum_count[k])
+                 ///printf("(%ld , %ld , %ld)\n",l,u,t);
+                 int k = 0;
+                 //while((((t - l + 1)*Cum_count[symbol_num]))/(u - l + 1.0) > Cum_count[k])
+                 while((((t - l + 1)*Cum_count[symbol_num] - 1))/(u - l + 1) >= Cum_count[k])
                  {
                    k ++;
                  }
@@ -171,7 +173,7 @@ void main(int argc , char * args[])
                  unsigned char symbol = symbols[k];
                  num_wait_decode -- ;
                  ///printf(" num_wait_decode = %d\n",num_wait_decode);
-                 ///printf("@@@@@@the number %d is (ASCII = %x)\n",Cum_count[symbol_num] - num_wait_decode, symbol);
+                 ///printf("@@@@@@the number %d is (ASCII = %d)\n",Cum_count[symbol_num] - num_wait_decode, symbol);
                 
                  fputc(symbol , fpo);
                  rescale(&l,&u, k , Cum_count);
